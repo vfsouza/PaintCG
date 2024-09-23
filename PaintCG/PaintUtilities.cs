@@ -12,40 +12,6 @@ using System.Windows.Shapes;
 namespace PaintCG {
 	public class PaintUtilities {
 
-		// Função para converter um valor de enumeração ClipModeEnum em uma string
-		public static string ClipModeToString(ClipModeEnum clipMode) {
-			switch (clipMode) {
-				case ClipModeEnum.CohenSutherland:
-					return "Cohen-Sutherland";
-				case ClipModeEnum.LiangBarsky:
-					return "Liang-Barsky";
-				case ClipModeEnum.NoClip:
-					return "No Clip";
-				default:
-					throw new ArgumentException("Invalid clip mode");
-			}
-		}
-
-		// Função para converter um valor de enumeração DrawModeEnum em uma string
-		public static string DrawModeToString(DrawModeEnum drawMode) {
-			switch (drawMode) {
-				case DrawModeEnum.RetaDDA:
-					return "Reta DDA";
-				case DrawModeEnum.RetaBresenham:
-					return "Reta Bresenham";
-				case DrawModeEnum.Circunferencia:
-					return "Circunferência";
-				case DrawModeEnum.Retangulo:
-					return "Retângulo";
-				case DrawModeEnum.Selecionar:
-					return "Selecionar";
-				case DrawModeEnum.Desenhar:
-					return "Desenhar";
-				default:
-					throw new ArgumentException("Invalid draw mode");
-			}
-		}
-
 		// Função para rotacionar um ponto em torno de um ponto central por um ângulo específico
 		public static Point RotatePoint(Point pointToRotate, Point centerPoint, double angleInDegrees) {
 			// Converte o ângulo de graus para radianos, pois as funções trigonométricas utilizam radianos

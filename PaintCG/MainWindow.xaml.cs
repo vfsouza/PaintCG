@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
@@ -34,6 +35,7 @@ namespace PaintCG {
 		private Size originalSelectionSize;
 
 		List<Ellipse> selectedElements = new List<Ellipse>();
+		List<ToggleButton> toggleButtons = new List<ToggleButton>();
 
 		private bool isClipping = false;
 		private bool acceptClipping = true;
@@ -43,7 +45,6 @@ namespace PaintCG {
 
 		public MainWindow() {
 			InitializeComponent();
-			DrawModeText.Text = $"Modo de Desenho: {PaintUtilities.DrawModeToString(DrawMode)}";
 			ColorDisplay.Fill = brushColor;
 
 			// Inicialize o TransformGroup e RotateTransform
@@ -52,6 +53,10 @@ namespace PaintCG {
 			scaleTransform = new ScaleTransform();
 			transformGroup.Children.Add(rotateTransform);
 			transformGroup.Children.Add(scaleTransform);
+
+			foreach (ToggleButton tb in DockPanelToggleButtons.Children.OfType<ToggleButton>()) {
+				toggleButtons.Add(tb);
+			}
 
 			// Inicialize os valores dos sliders de escala
 			ScaleXSlider.Value = 1;
@@ -477,11 +482,11 @@ namespace PaintCG {
 				switch (reflectionType) {
 					case ReflectionType.X:
 						// Reflete no eixo X, mantendo a coordenada X e invertendo a Y
-						reflectedPosition.X = 2 * selectionCenter.X - originalPosition.X;
+						reflectedPosition.Y = 2 * selectionCenter.Y - originalPosition.Y;
 						break;
 					case ReflectionType.Y:
 						// Reflete no eixo Y, mantendo a coordenada Y e invertendo a X
-						reflectedPosition.Y = 2 * selectionCenter.Y - originalPosition.Y;
+						reflectedPosition.X = 2 * selectionCenter.X - originalPosition.X;
 						break;
 					case ReflectionType.XY:
 						// Reflete em ambos os eixos, invertendo tanto X quanto Y
@@ -559,42 +564,44 @@ namespace PaintCG {
 		}
 		private void Liang_Click(object sender, RoutedEventArgs e) {
 			ClipMode = ClipModeEnum.LiangBarsky;
+			ToggleButtonsReverse(sender as ToggleButton);
 			ApplyClippingToSelection(ClipModeEnum.LiangBarsky);
 		}
 		private void Cohen_Click(object sender, RoutedEventArgs e) {
 			ClipMode = ClipModeEnum.CohenSutherland;
+			ToggleButtonsReverse(sender as ToggleButton);
 			ApplyClippingToSelection(ClipModeEnum.CohenSutherland);
 		}
 		private void Select_Click(object sender, RoutedEventArgs e) {
 			DrawMode = DrawModeEnum.Selecionar;
-			DrawModeText.Text = $"Modo de Desenho: {PaintUtilities.DrawModeToString(DrawMode)}";
+			ToggleButtonsReverse(sender as ToggleButton);
 		}
 		private void Retangulo_Click(object sender, RoutedEventArgs e) {
 			DrawMode = DrawModeEnum.Retangulo;
-			DrawModeText.Text = $"Modo de Desenho: {PaintUtilities.DrawModeToString(DrawMode)}";
+			ToggleButtonsReverse(sender as ToggleButton);
 		}
 		private void Limpar_Click(object sender, RoutedEventArgs e) {
 			DrawingCanvas.Children.Clear();
 		}
 		private void DDA_Click(object sender, RoutedEventArgs e) {
 			DrawMode = DrawModeEnum.RetaDDA;
-			DrawModeText.Text = $"Modo de Desenho: {PaintUtilities.DrawModeToString(DrawMode)}";
+			ToggleButtonsReverse(sender as ToggleButton);
 		}
 		private void BresenhamLine_Click(object sender, RoutedEventArgs e) {
 			DrawMode = DrawModeEnum.RetaBresenham;
-			DrawModeText.Text = $"Modo de Desenho: {PaintUtilities.DrawModeToString(DrawMode)}";
+			ToggleButtonsReverse(sender as ToggleButton);
 		}
 		private void BresenhamCirc_Click(object sender, RoutedEventArgs e) {
 			DrawMode = DrawModeEnum.Circunferencia;
-			DrawModeText.Text = $"Modo de Desenho: {PaintUtilities.DrawModeToString(DrawMode)}";
+			ToggleButtonsReverse(sender as ToggleButton);
 		}
 		private void Move_Click(object sender, RoutedEventArgs e) {
 			isMovingSelection = !isMovingSelection;
-			DrawModeText.Text = "Modo de Desenho: Move";
+			ToggleButtonsReverse(sender as ToggleButton);
 		}
 		private void Draw_Click(object sender, RoutedEventArgs e) {
 			DrawMode = DrawModeEnum.Desenhar;
-			DrawModeText.Text = $"Modo de Desenho: {PaintUtilities.DrawModeToString(DrawMode)}";
+			ToggleButtonsReverse(sender as ToggleButton);
 		}
 
 		// Eventos de alteração de cor
@@ -672,6 +679,14 @@ namespace PaintCG {
 					Point currentPoint = e.GetPosition(DrawingCanvas);
 					if (previousMousePosition != null) DrawLineDDA(previousMousePosition.Value, currentPoint);
 					previousMousePosition = currentPoint;
+				}
+			}
+		}
+
+		private void ToggleButtonsReverse(ToggleButton currentToggleButton) {
+			foreach (ToggleButton tb in toggleButtons) {
+				if (tb != currentToggleButton) {
+					tb.IsChecked = false;
 				}
 			}
 		}
