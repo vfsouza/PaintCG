@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35222.181
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaintCG", "PaintCG\PaintCG.csproj", "{6DDBCF5E-46DF-4025-AA5F-7722F85EF50E}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SetupPaintCG", "SetupPaintCG\SetupPaintCG.vdproj", "{4C87C001-46C4-4B29-A2AF-2061C3CA45D5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6DDBCF5E-46DF-4025-AA5F-7722F85EF50E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6DDBCF5E-46DF-4025-AA5F-7722F85EF50E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6DDBCF5E-46DF-4025-AA5F-7722F85EF50E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6DDBCF5E-46DF-4025-AA5F-7722F85EF50E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C87C001-46C4-4B29-A2AF-2061C3CA45D5}.Debug|Any CPU.ActiveCfg = Debug
+		{4C87C001-46C4-4B29-A2AF-2061C3CA45D5}.Release|Any CPU.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {855CCF1F-0D82-41BF-B912-91CFAB18B5AC}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace PaintCG {
+	public enum DrawModeEnum {
+		RetaDDA,
+		RetaBresenham,
+		Circunferencia,
+		Retangulo,
+		Selecionar,
+		Desenhar
+	}
+}

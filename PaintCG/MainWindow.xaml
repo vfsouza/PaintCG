@@ -1,0 +1,173 @@
+﻿<Window x:Class="PaintCG.MainWindow"
+		  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		  xmlns:local="clr-namespace:PaintCG"
+		  xmlns:xc="http://schemas.xceed.com/wpf/xaml/toolkit"
+		  mc:Ignorable="d"
+		  Title="Paint CG"
+		  Height="650"
+		  Width="1096">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition />
+		</Grid.RowDefinitions>
+		<DockPanel Grid.Row="0"
+					  Background="Gray"
+					  Height="30"
+					  LastChildFill="False">
+			<DockPanel.Resources>
+				<Style TargetType="Button">
+					<Setter Property="Padding"
+							  Value="8,0,8,0" />
+					<Setter Property="Margin"
+							  Value="0,0,2,0" />
+				</Style>
+			</DockPanel.Resources>
+			<Button x:Name="Desenhar"
+					  Content="Desenhar"
+					  Click="Draw_Click" />
+			<Button x:Name="DDALine"
+					  Content="Reta DDA"
+					  Click="DDA_Click" />
+			<Button x:Name="BresenhamLine"
+					  Content="Reta Bresenham"
+					  Click="BresenhamLine_Click" />
+			<Button x:Name="BresenhamCirc"
+					  Content="Circulo"
+					  Click="BresenhamCirc_Click" />
+			<Button x:Name="Retangulo"
+					  Content="Retangulo"
+					  Click="Retangulo_Click" />
+			<Button x:Name="Select"
+					  Content="Selecionar"
+					  Click="Select_Click" />
+			<Button x:Name="Move"
+					  Content="Mover"
+					  Click="Move_Click" />
+			<TextBlock x:Name="DrawModeText"
+						  Text="Modo de Desenho: "
+						  VerticalAlignment="Center"
+						  FontSize="14"
+						  Margin="4,0,0,0" />
+			<StackPanel DockPanel.Dock="Right"
+							Orientation="Horizontal">
+				<StackPanel.Resources>
+					<Style TargetType="Button">
+						<Setter Property="Padding"
+								  Value="8,0,8,0" />
+						<Setter Property="Margin"
+								  Value="2,0,0,0" />
+					</Style>
+				</StackPanel.Resources>
+				<Rectangle x:Name="ColorDisplay"
+							  Width="30"
+							  Height="30" />
+				<xc:ColorPicker x:Name="ColorPicker"
+									 Width="18"
+									 SelectedColorChanged="ColorPicker_SelectedColorChanged" />
+				<Button x:Name="Cohen"
+						  Content="Cohen Sutherland"
+						  Click="Cohen_Click"
+						  Margin="10,0,0,0" />
+				<Button x:Name="Liang"
+						  Content="Liang Barsky"
+						  Click="Liang_Click" />
+				<Button x:Name="Limpar"
+						  Content="Limpar"
+						  Click="Limpar_Click"
+						  Margin="10,0,0,0" />
+			</StackPanel>
+		</DockPanel>
+		<DockPanel Grid.Row="1"
+					  Background="Gray"
+					  LastChildFill="False">
+			<DockPanel Background="LightGray"
+						  Height="30">
+				<TextBlock Text="Rotação:"
+							  VerticalAlignment="Center"
+							  Margin="10,0,0,0" />
+				<Slider x:Name="RotationSlider"
+						  Minimum="0"
+						  Maximum="360"
+						  Width="190"
+						  VerticalAlignment="Center"
+						  Margin="5,0"
+						  ValueChanged="RotationSlider_ValueChanged" />
+				<TextBlock x:Name="RotationValueText"
+							  VerticalAlignment="Center"
+							  Width="24"
+							  Margin="0,0,10,0" />
+			</DockPanel>
+			<DockPanel Background="LightGray"
+						  Height="30">
+				<TextBlock Text="Escala X:"
+							  VerticalAlignment="Center"
+							  Margin="10,0,0,0" />
+				<Slider x:Name="ScaleXSlider"
+						  Minimum="0.1"
+						  Maximum="2"
+						  Value="1"
+						  Width="190"
+						  VerticalAlignment="Center"
+						  Margin="5,0"
+						  ValueChanged="ScaleSlider_ValueChanged" />
+				<TextBlock x:Name="ScaleXValueText"
+							  Text=""
+							  VerticalAlignment="Center"
+							  Margin="0,0,10,0" />
+			</DockPanel>
+			<DockPanel Background="LightGray"
+						  Height="30">
+				<TextBlock Text="Escala Y:"
+							  VerticalAlignment="Center"
+							  Margin="10,0,0,0" />
+				<Slider x:Name="ScaleYSlider"
+						  Minimum="0.1"
+						  Maximum="2"
+						  Value="1"
+						  Width="189"
+						  VerticalAlignment="Center"
+						  Margin="5,0"
+						  ValueChanged="ScaleSlider_ValueChanged" />
+				<TextBlock x:Name="ScaleYValueText"
+							  Text=""
+							  VerticalAlignment="Center"
+							  Margin="0,0,10,0" />
+			</DockPanel>
+			<StackPanel Grid.Row="0"
+							Orientation="Horizontal"
+							DockPanel.Dock="Right"
+							Background="Gray"
+							Height="30">
+				<StackPanel.Resources>
+					<Style TargetType="Button">
+						<Setter Property="Padding"
+								  Value="5,0" />
+					</Style>
+				</StackPanel.Resources>
+				<Button x:Name="ReflectX"
+						  Content="Reflexão X"
+						  Click="ReflectX_Click" />
+				<Button x:Name="ReflectY"
+						  Content="Reflexão Y"
+						  Click="ReflectY_Click" />
+				<Button x:Name="ReflectXY"
+						  Content="Reflexão XY"
+						  Click="ReflectXY_Click" />
+			</StackPanel>
+		</DockPanel>
+		<Canvas Grid.Row="2"
+				  x:Name="DrawingCanvas"
+				  Background="White"
+				  HorizontalAlignment="Stretch"
+				  VerticalAlignment="Stretch"
+				  ClipToBounds="True"
+				  PreviewMouseLeftButtonDown="DrawingCanvas_MouseLeftButtonDown"
+				  PreviewMouseLeftButtonUp="DrawingCanvas_MouseLeftButtonUp"
+				  MouseMove="DrawingCanvas_MouseMove" />
+	</Grid>
+</Window>
