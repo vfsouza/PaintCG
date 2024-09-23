@@ -341,16 +341,7 @@ namespace PaintCG {
 		}
 		// Função auxiliar para selecionar uma área retangular
 		private void SelectRectangleArea(Point p1, Point p2) {
-			// Limpa a seleção anterior
-			foreach (Ellipse pixel in selectedElements) {
-				pixel.Fill = Brushes.Black;
-			}
-			selectedElements.Clear();
-
-			// Remove o retângulo de seleção anterior, se existir
-			if (selectionRect != null) {
-				DrawingCanvas.Children.Remove(selectionRect);
-			}
+			ClearSelection();
 
 			// Cria um novo retângulo de seleção
 			selectionRect = new Rectangle {
@@ -444,18 +435,13 @@ namespace PaintCG {
 				DrawingCanvas.Children.Remove(element);
 			}
 
-			// Limpa a seleção anterior
-			foreach (Ellipse pixel in selectedElements) {
-				pixel.Fill = Brushes.Black;
-			}
-			selectedElements.Clear();
+			ClearSelection();
 
 			// Remove o retângulo de seleção anterior, se existir
 			if (selectionRect != null) {
 				DrawingCanvas.Children.Remove(selectionRect);
 			}
 		}
-
 		// Função que aplica a reflexão aos elementos selecionados
 		private void ApplyReflectionToSelection(ReflectionType reflectionType) {
 
@@ -566,34 +552,43 @@ namespace PaintCG {
 			ClipMode = ClipModeEnum.LiangBarsky;
 			ToggleButtonsReverse(sender as ToggleButton);
 			ApplyClippingToSelection(ClipModeEnum.LiangBarsky);
+			ClearSelection();
 		}
 		private void Cohen_Click(object sender, RoutedEventArgs e) {
 			ClipMode = ClipModeEnum.CohenSutherland;
 			ToggleButtonsReverse(sender as ToggleButton);
 			ApplyClippingToSelection(ClipModeEnum.CohenSutherland);
+			ClearSelection();
 		}
 		private void Select_Click(object sender, RoutedEventArgs e) {
 			DrawMode = DrawModeEnum.Selecionar;
 			ToggleButtonsReverse(sender as ToggleButton);
+
+			ClearSelection();
 		}
 		private void Retangulo_Click(object sender, RoutedEventArgs e) {
 			DrawMode = DrawModeEnum.Retangulo;
 			ToggleButtonsReverse(sender as ToggleButton);
+			ClearSelection();
 		}
 		private void Limpar_Click(object sender, RoutedEventArgs e) {
 			DrawingCanvas.Children.Clear();
+			ClearSelection();
 		}
 		private void DDA_Click(object sender, RoutedEventArgs e) {
 			DrawMode = DrawModeEnum.RetaDDA;
 			ToggleButtonsReverse(sender as ToggleButton);
+			ClearSelection();
 		}
 		private void BresenhamLine_Click(object sender, RoutedEventArgs e) {
 			DrawMode = DrawModeEnum.RetaBresenham;
 			ToggleButtonsReverse(sender as ToggleButton);
+			ClearSelection();
 		}
 		private void BresenhamCirc_Click(object sender, RoutedEventArgs e) {
 			DrawMode = DrawModeEnum.Circunferencia;
 			ToggleButtonsReverse(sender as ToggleButton);
+			ClearSelection();
 		}
 		private void Move_Click(object sender, RoutedEventArgs e) {
 			isMovingSelection = !isMovingSelection;
@@ -602,6 +597,7 @@ namespace PaintCG {
 		private void Draw_Click(object sender, RoutedEventArgs e) {
 			DrawMode = DrawModeEnum.Desenhar;
 			ToggleButtonsReverse(sender as ToggleButton);
+			ClearSelection();
 		}
 
 		// Eventos de alteração de cor
@@ -683,6 +679,18 @@ namespace PaintCG {
 			}
 		}
 
+		private void ClearSelection() {
+			// Limpa a seleção anterior
+			foreach (Ellipse pixel in selectedElements) {
+				pixel.Fill = Brushes.Black;
+			}
+			selectedElements.Clear();
+
+			// Remove o retângulo de seleção anterior, se existir
+			if (selectionRect != null) {
+				DrawingCanvas.Children.Remove(selectionRect);
+			}
+		}
 		private void ToggleButtonsReverse(ToggleButton currentToggleButton) {
 			foreach (ToggleButton tb in toggleButtons) {
 				if (tb != currentToggleButton) {
